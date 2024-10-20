@@ -3,12 +3,8 @@
 #include <locale.h>
 using namespace std;
 
-bool isValid(const wstring& s) {
-    for (wchar_t i:s) {
-        if (!(iswalpha(i))) {
-            return false;
-        }
-    }
+bool isValid(int key) {
+    if (key <= 0) {return false;}
     return true;
 }
 
@@ -16,12 +12,15 @@ int main() {
     setlocale(LC_ALL, "");
     wstring text = L"";
     wstring ciphertext = L"";
-    unsigned int columns;
+    int columns;
     unsigned int op;
     wcout << L"Введите количество столбцов: ";
     wcin >> columns;
     wcin.ignore(); // Игнорируем символ новой строки после считывания числа
-    
+    if (!isValid(columns)) {
+        wcerr << L"Ошибка, введите коректный ключ \n" ;
+        return 1;
+    }
     wcout << L"Ключ установлен\n";
     tableCipher cipher(columns);
     do {
